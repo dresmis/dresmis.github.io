@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Local Server",
+      "type": "shell",
+      "command": "C:/Users/esmis/AppData/Roaming/npm/http-server.cmd -p 8080",
+      "problemMatcher": [],
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Check MyWEB Links",
+      "type": "shell",
+      "command": "C:/Users/esmis/AppData/Roaming/npm/blc.cmd \"http://localhost:8080/index.html\" --recursive --filter-level=error",
+      "problemMatcher": [],
+      "dependsOn": "Start Local Server",
+      "group": "build"
+    }
+  ]
+}
