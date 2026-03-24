@@ -1,164 +1,169 @@
-MYWEB PROJECT - WEBSITE CONTROL GUIDE
-====================================
+# DRESMIS.GITHUB.IO PROJECT - WEBSITE CONTROL GUIDE
 
-LOCATION:
-C:\Users\esmis\Documents\MYWEB
+## LOCATION
+- **Linux:** `~/dresmis.github.io`  
+- **Windows:** `C:\Users\esmis\Documents\dresmis.github.io`
 
+---
 
-=================================================
-PROJECT INVENTORY
-=================================================
+## PROJECT INVENTORY
 
-CORE FILES
-----------
-index.html              - Main homepage
-style.css               - Global styling for all pages
-blank_page.html         - Template for all pages
+**Core Files**  
+- `index.html` – Homepage  
+- `style.css` – Global styling  
+- `blank_page.html` – Template for all pages  
 
-CONTENT PAGES
--------------
-todo-sobre-mi.html      - About page
-contact.html            - Contact page
-hobbies.html            - Hobbies & interests
-ciee.html               - Study Abroad
-dissertation-research.html - Dissertation
+**Content Pages**  
+- `todo-sobre-mi.html` – About  
+- `contact.html` – Contact  
+- `hobbies.html` – Hobbies & interests  
+- `ciee.html` – Study Abroad  
+- `dissertation-research.html` – Dissertation  
 
-CONFIG / TOOLS
---------------
-.vscode/tasks.json      - VS Code tasks (link checker, server)
+**Config / Tools**  
+- `.vscode/tasks.json` – VS Code tasks (link checker, server)
 
+---
 
-=================================================
-LOCAL SERVER (VIEW WEBSITE)
-=================================================
+## LOCAL SERVER (VIEW WEBSITE)
 
-1. Open VS Code
-2. Open MYWEB folder
-3. Open Terminal
+### Linux
+```bash
+cd ~/dresmis.github.io
+http-server -p 8080
+```
 
-4. Run:
-   http-server -p 8080
+### Windows
+1. Open VS Code  
+2. Open `dresmis.github.io` folder  
+3. Open Terminal / Command Prompt  
 
-5. Open browser:
-   http://localhost:8080
+```bash
+http-server -p 8080
+```
 
-6. Stop server:
-   CTRL + C
+- Open browser: `http://localhost:8080`  
+- Stop server: `CTRL + C`
 
+---
 
-=================================================
-LINK CHECKING (VERY IMPORTANT)
-=================================================
+## LINK CHECKING
 
-1. Make sure server is running
+```bash
+blc "http://localhost:8080/index.html" --recursive --filter-level=error
+```
 
-2. Run:
-   blc "http://localhost:8080/index.html" --recursive --filter-level=error
+- 404 = broken internal link  
+- 403 = blocked external site  
+- 3xx = redirect (update if needed)  
+- Repeat until all links clean
 
-3. Wait (can take time)
+---
 
-4. Fix:
-   - 404 = broken internal link
-   - 403 = blocked external site
-   - 3xx = redirect (update if needed)
+## STANDARD WORKFLOW
 
-5. Repeat until clean
+### Editing Existing Page
+1. Open file in VS Code  
+2. Make changes & save  
+3. Refresh browser, verify layout & links  
 
+### Creating New Page
+1. Copy `blank_page.html` → `newpage.html`  
+2. Update `<title>`, `<h2>`, page content  
+3. Add link to navigation menu  
+4. Test in browser  
 
-=================================================
-STANDARD WORKFLOW
-=================================================
+### Updating Navigation
+- Edit nav section in **all pages**  
+- Keep links consistent: `Home | About | Contact | Hobbies | Study Abroad | Dissertation`  
 
---- EDITING EXISTING PAGE ---
+### Styling Changes
+- Edit `style.css`  
+- Save and refresh  
+- Check in Firefox & Chrome
 
-1. Open file in VS Code
-2. Make changes
-3. Save file
-4. Refresh browser
-5. Verify layout and links
+### Fixing Links
+- Run link checker (`blc`)  
+- Update broken links  
+- Re-run checker
 
+---
 
---- CREATING NEW PAGE ---
+## GIT SYNC BETWEEN RIGS
 
-1. Copy blank_page.html
-2. Rename file (example: newpage.html)
-3. Update:
-   - <title>
-   - <h2> REPLACE THIS TEXT
-   - Page content
-4. Add link to navigation menu
-5. Test in browser
+### Initial Setup (if folder not cloned yet)
+```bash
+cd ~/dresmis.github.io
+git init
+git remote add origin https://github.com/dresmis/dresmis.github.io.git 2>/dev/null
+git fetch origin
+git reset --hard origin/main
+```
 
+### Regular Update
+```bash
+cd ~/dresmis.github.io
+git pull origin main
+```
 
---- UPDATING NAVIGATION ---
+- Use the **Windows path** when working on the HP rig (`C:\Users\esmis\Documents\dresmis.github.io`)  
+- **Backup local edits first** to avoid overwriting  
 
-1. Edit nav section in ALL pages
-2. Keep links consistent:
-   Home | About | Contact | Hobbies | Study Abroad | Dissertation
-3. Save all files
-4. Refresh browser
+---
 
+## COMMON PROBLEMS + FIXES
 
---- STYLING CHANGES ---
+- **PORT 8080 IN USE:** Close server / reboot  
+- **COMMAND NOT FOUND:** Restart VS Code, check Node.js installation  
+- **Link checker slow:** Normal, be patient  
 
-1. Edit style.css
-2. Save file
-3. Refresh browser
-4. Check in multiple browsers (Firefox + Chrome)
+---
 
+## DESIGN RULES
 
---- FIXING LINKS ---
+- Use `blank_page.html` as base  
+- Keep navigation identical everywhere  
+- Layout simple & readable  
+- Footer consistent  
 
-1. Run link checker (blc)
-2. Identify broken links
-3. Update or remove links
-4. Re-run checker
+---
 
+## PRE-PUBLISH CHECKLIST
 
-=================================================
-COMMON PROBLEMS + FIXES
-=================================================
+- [ ] All pages load  
+- [ ] Navigation works  
+- [ ] No broken internal links  
+- [ ] External links updated (https)  
+- [ ] Layout consistent  
+- [ ] Test in Firefox & Chrome  
 
-PORT 8080 IN USE:
-- Error: EADDRINUSE
-- Fix: Close server or reboot
+---
 
-COMMAND NOT FOUND:
-- Restart VS Code
-- Check Node installation
+## HTML CHEAT SHEET (Quick Reference)
 
-LINK CHECKER TAKES LONG:
-- Normal
-- Be patient
+| Tag | Purpose |
+|-----|---------|
+| `<html>` | Root element |
+| `<head>` | Metadata, scripts, styles |
+| `<title>` | Page title in browser |
+| `<body>` | Page content |
+| `<h1>…<h6>` | Headings |
+| `<p>` | Paragraph |
+| `<a href="URL">` | Link |
+| `<img src="URL" alt="desc">` | Image |
+| `<ul>` / `<ol>` | Lists |
+| `<li>` | List item |
+| `<div>` | Block container |
+| `<span>` | Inline container |
+| `<strong>` | Bold / important text |
+| `<em>` | Italic / emphasis |
+| `<br>` | Line break |
+| `<link rel="stylesheet" href="style.css">` | Include CSS |
 
+---
 
-=================================================
-DESIGN RULES (KEEP IT CLEAN)
-=================================================
-
-- Use blank_page.html for ALL pages
-- Keep navigation identical everywhere
-- Keep layout simple and readable
-- Prefer left-aligned text for readability
-- Keep footer consistent
-
-
-=================================================
-PRE-PUBLISH CHECKLIST (GITHUB)
-=================================================
-
-[ ] All pages load
-[ ] Navigation works on all pages
-[ ] No broken internal links
-[ ] External links updated (https)
-[ ] Layout consistent across pages
-[ ] Test in Firefox and Chrome
-
-
-=================================================
-NOTES
-=================================================
-
-- Always test locally before publishing
-- Keep things simple (less is better)
-- Fix structure first, design second
+### NOTES
+- Test locally before publishing  
+- Keep things simple  
+- Fix structure before design  
+- Always sync GitHub before switching rigs
